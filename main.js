@@ -30,7 +30,7 @@ function whoWon(playerSelection, computerSelection){
 function resultMsg(gameResult, playerSelection, computerSelection){
     //if it's a tie
     if (gameResult==='tie'){
-        console.log(`It's a tie! Both sides chose ${playerSelection}.`);
+        console.log(`It's a tie! Both sides chose ${playerSelection}. Try again.`);
     }
     // when the player wins:
     else if (gameResult==='win'){
@@ -66,8 +66,7 @@ function play(){
         if (gameResult==='win') {scorePlayer++}
         else if (gameResult==='lose'){scoreComputer++}
         else {
-            scoreComputer++;
-            scorePlayer++;
+            i=i-1; //if it is a tie the round doesn't count
         };
         //print out the results
         resultMsg(gameResult, playerChoice, computerChoice);
@@ -79,16 +78,11 @@ function play(){
 let scorePlayer = 0;
 let scoreComputer = 0;
 scorePlayer, scoreComputer = play();
-let resultString=""
-if (scorePlayer>scoreComputer){
-    resultString="Congratulations! You won the game!";
-}
-else if (scorePlayer<scoreComputer){
-    resultString="Sorry, you lost the game!";
-}
-else{
-    resultString="Your game ended in a tie!";
-};
+//print out final message:
+let resultString = 
+    (scorePlayer>scoreComputer) 
+    ? "Congratulations! You won the game!" 
+    : "Sorry, you lost the game!";
 
 alert(resultString+`\nFinal score is: ${scorePlayer}-${scoreComputer}\nWanna try again?`);
 location.reload();
