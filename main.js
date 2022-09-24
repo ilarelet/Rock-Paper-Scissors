@@ -71,6 +71,9 @@ function play(){
         //print out the results
         resultMsg(gameResult, playerChoice, computerChoice);
         console.log(`Current score is: ${scorePlayer}-${scoreComputer}`);
+        if (scorePlayer===3 || scoreComputer===3){
+            return(scorePlayer, scoreComputer);
+        }
     }
     return(scorePlayer, scoreComputer);
 }
