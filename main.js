@@ -8,36 +8,87 @@ function getComputerChoice() {
     return(list[numChosen]);
 }
 
-//the next function determines who won and prints out the result
-function playGame(playerSelection, computerSelection){
+//the function that determines who won
+function whoWon(playerSelection, computerSelection){
     //if it's a tie
     if (playerSelection===computerSelection){
-        console.log(`Oh WOW! it's a tie! Both sides chose ${playerSelection}.`);
+        return(`tie`);
     }
     // when the player wins:
     else if ((playerSelection==="rock" && computerSelection==="scissors")||
     (playerSelection==="paper" && computerSelection==="rock")||
     (playerSelection==="scissors" && computerSelection==="paper")){
-        console.log(`Congratulations! You won! ${playerSelection} beats ${computerSelection}.`);
+        return(`win`);
     }
     else{
     //when the computer wins:
-        console.log(`Sorry, you lost! ${computerSelection} beats ${playerSelection}.`);
+        return(`lose`);
     }
 }
 
-function play(playerSelection){
-    let playerChoice = "";
-    for (let choices in list) {
-        if (list[choices] === playerSelection.toLowerCase()){
-            playerChoice=list[choices];
+//the function that prints out the result
+function resultMsg(gameResult, playerSelection, computerSelection){
+    //if it's a tie
+    if (gameResult==='tie'){
+        console.log(`It's a tie! Both sides chose ${playerSelection}.`);
+    }
+    // when the player wins:
+    else if (gameResult==='win'){
+        console.log(`You won! ${playerSelection} beats ${computerSelection}.`);
+    }
+    else{
+    //when the computer wins:
+        console.log(`You lost! ${computerSelection} beats ${playerSelection}.`);
+    }
+}
+
+function play(){
+    scoreComputer = 0;
+    scorePlayer = 0;
+    for (let i=0; i<5; i++){  // playing the game times
+        let playerSelection = prompt("Enter your choice: "); //prompting players choice as a string
+        let playerChoice = "";   // that var will have a correctly spelled choice from the list
+        for (let choices in list) {  // checking if the entered selection is in the list
+            if (list[choices] === playerSelection.toLowerCase()){
+                playerChoice=list[choices];  
+            }
         }
+        if (playerChoice === ""){  // if the selection is incorrect that variaable will stay empty
+            console.log("Your choice is not a possible option. Try again: ");
+            i=i-1; //if we do not play we stay on the same round
+            continue;
+        };
+        // generate the choice for the computer
+        computerChoice = getComputerChoice();
+        // determining who won
+        gameResult=whoWon(playerChoice, computerChoice);
+        //updating the scores:
+        if (gameResult==='win') {scorePlayer++}
+        else if (gameResult==='lose'){scoreComputer++}
+        else {
+            scoreComputer++;
+            scorePlayer++;
+        };
+        //print out the results
+        resultMsg(gameResult, playerChoice, computerChoice);
+        console.log(`Current score is: ${scorePlayer}-${scoreComputer}`);
     }
-    if (playerChoice === ""){
-        console.log("Your choice is not a possible option. Try again: ");
-        return null;
-    }
-    playGame(playerChoice, getComputerChoice());
+    return(scorePlayer, scoreComputer);
 }
 
-console.log(`To play text "play(*your choice*)"`);
+let scorePlayer = 0;
+let scoreComputer = 0;
+scorePlayer, scoreComputer = play();
+let resultString=""
+if (scorePlayer>scoreComputer){
+    resultString="Congratulations! You won the game!";
+}
+else if (scorePlayer<scoreComputer){
+    resultString="Sorry, you lost the game!";
+}
+else{
+    resultString="Your game ended in a tie!";
+};
+
+alert(resultString+`\nFinal score is: ${scorePlayer}-${scoreComputer}\nWanna try again?`);
+location.reload();
