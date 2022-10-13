@@ -34,11 +34,11 @@ function resultMsg(gameResult, playerSelection, computerSelection){
     }
     // when the player wins:
     else if (gameResult==='win'){
-        return(`You won! ${playerSelection} beats ${computerSelection}.`);
+        return(`You won! ${playerSelection[0].toUpperCase() + playerSelection.substr(1)} beats ${computerSelection}.`);
     }
     else{
     //when the computer wins:
-        return(`You lost! ${computerSelection} beats ${playerSelection}.`);
+        return(`You lost! ${computerSelection[0].toUpperCase() + computerSelection.substr(1)} beats ${playerSelection}.`);
     }
 }
 
