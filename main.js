@@ -45,7 +45,7 @@ function resultMsg(gameResult, playerSelection, computerSelection){
 //main game function that compares player's choice to the computer-generated and returs the updated score
 function play(playerChoice, score){
     // generate the choice for the computer
-    computerChoice = getComputerChoice();
+    let computerChoice = getComputerChoice();
     // determining who won
     gameResult=whoWon(playerChoice, computerChoice);
     //updating the scores:
@@ -57,8 +57,19 @@ function play(playerChoice, score){
     resultText=document.querySelector('#roundResult')
     scoreText = document.querySelector('#currentScore')
     resultText.textContent = resultMsg(gameResult, playerChoice, computerChoice);
-    scoreText.textContent=`Current score is: ${score[0]}-${score[1]}`;
-    return([score]); 
+    let finalScore = `${score[0]}-${score[1]}`
+    //Checking if the game is over
+    if (score[0] >= 5 || score[1] >= 5) {
+        //if someone got 5 points - announce the winner
+        let winner = score[0]>score[1] ? 'You' : 'Computer';
+        scoreText.textContent = `${winner==='You' ? 'Congratulations! ':'Sorry... '} ${winner} won the game! The final score is: ${finalScore}`;
+        //The score has to be reseted after game ends
+        score = [0, 0];
+    }
+    else {
+        scoreText.textContent = `Current score is: ${finalScore}`;
+    }
+    return(score); 
 }
 
 //initate the original score: 0:0
@@ -70,16 +81,5 @@ score = [scorePlayer, scorePlayer];
 playButtons = document.querySelectorAll('.playerChoice');
 playButtons.forEach((playButton) => 
     playButton.addEventListener('click', function(e) {
-        play(e.target.getAttribute('data-choice'), score);
+        score = play(e.target.getAttribute('data-choice'), score);
 }));
-
-
-/*
-//print out final message:
-let resultString = 
-    (scorePlayer>scoreComputer) 
-    ? "Congratulations! You won the game!" 
-    : "Sorry, you lost the game!";
-
-alert(resultString+`\nFinal score is: ${scorePlayer}-${scoreComputer}\nWanna try again?`);
-location.reload();*/
