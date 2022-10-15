@@ -54,8 +54,9 @@ function play(playerChoice, score){
 
 
     //print out the results
-    resultText=document.querySelector('#roundResult')
-    scoreText = document.querySelector('#currentScore')
+    resultText=document.querySelector('#roundResult');
+    scoreText = document.querySelector('#currentScore');
+    choicePC.textContent=`COMPUTER CHOSE ${computerChoice.toUpperCase()}!`
     resultText.textContent = resultMsg(gameResult, playerChoice, computerChoice);
     let finalScore = `${score[0]}-${score[1]}`
     //Checking if the game is over
